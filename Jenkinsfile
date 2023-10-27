@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven: "localMaven"
-        jdk: "Java9"
+        maven "localMaven"
+        jdk "Java9"
     }
     stages {
 
