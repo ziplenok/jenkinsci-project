@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    tools {
-        maven "localMaven"
-        jdk "Java11"
-    }
-
     environment {
         // This can be nexus3 or nexus2
         NEXUS_VERSION = "nexus3"
