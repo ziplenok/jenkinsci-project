@@ -14,7 +14,6 @@ pipeline {
         NEXUS_REPOSITORY = "mavenTest"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexusCredsAdmin"
-        ARTIFACT_VERSION = "${BUILD_NUMBER}"
     }
 
     stages {
