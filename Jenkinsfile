@@ -14,7 +14,9 @@ pipeline {
     }
 
     stages {
-        agent { image '3.9.5-eclipse-temurin-11' }
+        agent { 
+            docker { image '3.9.5-eclipse-temurin-11'} 
+        }
 
         stage("mvn build") {
             steps {
