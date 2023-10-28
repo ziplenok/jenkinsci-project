@@ -1,5 +1,7 @@
 pipeline {
-    agent none
+    agent { 
+        docker { image '3.9.5-eclipse-temurin-11'} 
+    }
     environment {
         // This can be nexus3 or nexus2
         NEXUS_VERSION = "nexus3"
@@ -15,10 +17,6 @@ pipeline {
     }
 
     stages {
-        agent { 
-            docker { image '3.9.5-eclipse-temurin-11'} 
-        }
-
         stage("mvn build") {
             steps {
                 script {
