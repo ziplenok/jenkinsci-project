@@ -1,25 +1,38 @@
 pipeline {
     agent any
+    tools {
+        maven '3.9.5'
+    }
     environment {
         // This can be nexus3 or nexus2
         NEXUS_VERSION = "nexus3"
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running
-        NEXUS_URL = "localhost:8081"
+        NEXUS_URL = "localhost:8083"
         // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "maven-private"
         // Jenkins credential id to authenticate to Nexus OSS
-        NEXUS_CREDENTIAL_ID = "nexusAdminCreds"
+        NEXUS_CREDENTIAL_ID = "nexusCreds"
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
     }
 
     stages {
-
         stage("mvn build") {
             steps {
                 script {
                     sh "mvn clean package"
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
@@ -62,19 +75,6 @@ pipeline {
                         error "*** File: ${artifactPath}, could not be found";
                     }
                 }
-            }
-        }
-        stage ('Execute Ansible Play - CD'){
-            agent {
-                label 'ansible'
-            }
-            steps{
-                script {
-                    git branch: 'feature/ansibleNexus', url: 'https://github.com/ranjit4github/Ansible_Demo_Project.git';
-                }
-                sh '''
-                    ansible-playbook -e vers=${BUILD_NUMBER} roles/site.yml
-                '''
             }
         }
     }
