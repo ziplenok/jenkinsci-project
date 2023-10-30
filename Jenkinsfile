@@ -17,6 +17,9 @@ pipeline {
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
     }
 
+
+
+    stages {
         stage("mvn build") {
             steps {
                 script {
@@ -26,7 +29,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage("publish to nexus") {
             steps {
                 script {
@@ -74,4 +77,4 @@ pipeline {
             }
         }
     }
-
+}
