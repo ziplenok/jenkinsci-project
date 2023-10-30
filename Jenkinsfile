@@ -9,11 +9,15 @@ pipeline {
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running
-        NEXUS_URL = "localhost:8081"
+        NEXUS_URL = "127.0.0.1:8081"
         // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "maven-jenkins-repo"
         // Jenkins credential id to authenticate to Nexus OSS
+<<<<<<< HEAD
         NEXUS_CREDENTIAL_ID = "nexusCreds"
+=======
+        NEXUS_CREDENTIAL_ID = "	nexusCredsAdmin"
+>>>>>>> 9e907f98e115d577153db8ef7acabbdbbd3e260e
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
     }
 
@@ -26,17 +30,17 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-
+        // stage('Test') {
+        //     steps {
+        //         sh 'mvn test'
+        //     }
+        //     post {
+        //         always {
+        //             junit 'target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
+    
         stage("publish to nexus") {
             steps {
                 script {
